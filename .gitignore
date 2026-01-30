@@ -13,3 +13,5 @@ nltk_data/
 
 
 *.log
+
+.env
