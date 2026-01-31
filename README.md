@@ -1,70 +1,162 @@
 # Content Moderation ML System
 
-An ML-powered toxic comment and content moderation system designed to be integrated into web applications, bots, and mobile platforms.
+An end-to-end **machine learning–powered content moderation system** designed for real-world integration with web platforms, APIs, and chat applications.
+
+This project demonstrates how an ML model can be trained, deployed as a backend service, and consumed by external applications such as Discord bots or mobile apps.
+
+---
 
 ## Features
-- Toxic comment detection using machine learning
-- TF-IDF + Logistic Regression model
-- REST API built with FastAPI
-- Confidence scoring and severity levels
-- Ready for Discord bot and mobile app integration
+
+- Toxic comment detection using Machine Learning  
+- TF-IDF + Logistic Regression NLP model  
+- REST API built using FastAPI  
+- Confidence-based severity classification  
+- Real-time Discord bot integration  
+- Modular and extensible architecture  
+
+---
 
 ## Tech Stack
-- Python
-- Scikit-learn
-- FastAPI
-- NLP (TF-IDF)
-- REST APIs
+
+### Backend & Machine Learning
+- Python  
+- Scikit-learn  
+- NumPy  
+- Pandas  
+- NLTK  
+
+### API
+- FastAPI  
+- Uvicorn  
+
+### Integration
+- Discord Bot (discord.py)  
+- REST-based ML communication  
+
+### Version Control
+- Git  
+- GitHub  
+- Tower (Git GUI)  
+
+---
+
+## System Architecture
+
+```
+
+User Message
+↓
+Discord Bot / Web App
+↓
+FastAPI ML Service
+↓
+ML Model Prediction
+↓
+Toxicity Result + Confidence
+↓
+Action (warn / restrict / allow)
+
+````
+
+---
 
 ## API Endpoints
 
-### Health Check
-GET /
+### 1. Health Check
 
+**GET /**
 
-### Moderate Content
+Response:
+```json
+{
+  "message": "Content Moderation API running"
+}
+````
 
-POST /moderate
+---
 
+### 2. Moderate Content
+
+**POST /moderate**
 
 Request:
-```bash
-json
+
+```json
 {
   "text": "you are stupid"
 }
 ```
+
 Response:
-```bash
+
+```json
 {
   "toxic": true,
   "confidence": 0.87,
   "severity": "high"
 }
 ```
+
+---
+
 ## Project Structure
-```bash
-content-moderation-ml/
-├── api/
-├── preprocessing/
-├── training/
-├── inference/
-├── models/
-└── requirements.txt
+
 ```
+content-moderation-ml/
+│
+├── api/                     # FastAPI backend
+│   └── main.py
+│
+├── preprocessing/           # Text cleaning utilities
+│
+├── training/                # Model training scripts
+│
+├── inference/               # Prediction helpers
+│
+├── models/                  # Trained ML models
+│
+├── discord_bot/             # Discord moderation bot
+│   └── bot.py
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Current Status
+
+* ML model trained and evaluated
+* REST API implemented
+* Discord bot integrated
+* Warning-based moderation system (experimental)
+* Designed for future scalability
+
+---
 
 ## Future Enhancements
 
-Discord moderation bot
+* Multi-language toxicity detection
+* Transformer-based models (BERT / RoBERTa)
+* Moderation analytics dashboard
+* Admin review panel
+* Database-backed warning system
+* Mobile app integration
+* Cloud deployment (Render / Railway / AWS)
 
-Mobile app integration
-
-Multi-language support
-
-Transformer-based model upgrade
-
-Admin moderation dashboard
+---
 
 ## Author
 
-Rakshit Kumar
+**Rakshit Kumar**
+
+This project was built to demonstrate real-world ML deployment, backend integration, and system-level engineering practices.
+
+---
+
+## Note
+
+This repository focuses on **learning, architecture, and engineering workflows**.
+Some integrations are under active development and may evolve over time.
+
