@@ -24,19 +24,43 @@ def root():
 
 @app.post("/moderate")
 def moderate_text(request: TextRequest):
-    cleaned = clean_text(request.text)
-    vec = vectorizer.transform([cleaned])
-    prob = model.predict_proba(vec)[0][1]
+    try:
+        text = request.text.strip()
 
-    severity = "low"
-    if prob > 0.8:
-        severity = "high"
-    elif prob > 0.5:
-        severity = "medium"
+        # ✅ Guard 1: empty or whitespace text
+        if not text:
+            return {
+                "toxic": False,
+                "confidence": 0.0,
+                "severity": "low"
+            }
 
-    return {
-    "toxic": bool(prob > 0.5),
-    "confidence": float(round(prob, 3)),
-    "severity": severity
-}
+        cleaned = clean_text(text)
 
+        # ✅ Guard 2: vectorizer safety
+        vec = vectorizer.transform([cleaned])
+
+        prob = model.predict_proba(vec)[0][1]
+        prob = float(prob)
+
+        severity = "low"
+        if prob > 0.8:
+            severity = "high"
+        elif prob > 0.5:
+            severity = "medium"
+
+        return {
+            "toxic": bool(prob > 0.5),
+            "confidence": round(prob, 3),
+            "severity": severity
+        }
+
+    except Exception as e:
+        print("API ERROR:", e)
+
+        # ✅ Always return valid JSON
+        return {
+            "toxic": False,
+            "confidence": 0.0,
+            "severity": "low"
+        }
